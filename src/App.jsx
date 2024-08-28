@@ -1,27 +1,48 @@
-import React from "react";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
-import { Route, Routes } from "react-router-dom";
-import Home from "./Home";
-import About from "./About";
-import Service from "./Service";
-import Contact from "./Contact";
-import Navbar from "./Navbar";
+import React, { useState } from "react";
 import Footer from "./Footer";
+import Header from "./Header";
+import CreateNote from "./CreateNote";
+import Note from "./Note";
+
 const App = () => {
+
+  const [addItem , setAddItem] = useState([]);
+
+  const addNote = (note) => {
+    //alert("I am clicked");
+    setAddItem((prevData)=>{
+      return[...prevData,note];
+    })
+  };
+
+  const onDelete =(id)=>{
+    setAddItem((olddata)=>
+      olddata.filter((currdata,indx) => {
+        return indx !== id;
+      })
+    );
+  };
+
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route exact path="/" Component={Home} />
-        <Route exact path="/about" Component={About} />
-        <Route exact path="/service" Component={Service} />
-        <Route exact path="/contact" Component={Contact} />
-        {/* <Redirect to="/" /> */}
-      </Routes>
+      <Header />
+      <CreateNote passNote={addNote}/>
+
+      {addItem.map((val,index)=>{
+        return (<Note
+            key = {index}
+            id = {index}
+            title={val.title}
+            content={val.content}
+            deleteItem={onDelete}
+          />
+        );
+      })}
+
       <Footer/>
     </>
   );
+  
 };
 
 export default App;

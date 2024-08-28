@@ -1,14 +1,16 @@
 import React from "react";
 
 const Footer = () => {
-    return(
-        <>
-            <footer className="w-100 bg-light text-center ">
-            <p> © 2024 React Website. All Rights Reserved | Terms and Conditions</p>
 
+    const year = new Date().getFullYear();
+
+    return (
+        <>
+            <footer>
+                <p>copyright © {year} </p>
             </footer>
         </>
     )
-};
+}
 
 export default Footer;
